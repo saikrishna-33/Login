@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Login/Register Portal</title>
+
   <style>
+
     body {
       font-family: Arial, sans-serif;
       background: #f2f2f2;
@@ -13,6 +16,7 @@
       height: 100vh;
     }
 
+
     .container {
       background-color: gray;
       padding: 30px;
@@ -21,21 +25,27 @@
       width: 350px;
     }
 
+
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
 
+
     input {
+
       width: 100%;
       padding: 10px;
       margin: 8px 0;
       box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 4px;
+
     }
 
+
     button {
+
       width: 100%;
       padding: 10px;
       background-color: #4CAF50;
@@ -43,151 +53,387 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
+
     }
+
 
     button:hover {
+
       background-color: #45a049;
+
     }
+
 
     .toggle {
+
       text-align: center;
       margin-top: 10px;
+
     }
 
+
     .toggle a {
+
       color: #007BFF;
       cursor: pointer;
       text-decoration: none;
+
     }
+
 
     .toggle a:hover {
+
       text-decoration: underline;
+
     }
+
 
     .hidden {
+
       display: none;
+
     }
 
+
     .info {
+
       margin-top: 10px;
       font-size: 0.9em;
       color: #777;
       text-align: center;
+
     }
+
+
   </style>
+
 </head>
+
+
 <body>
 
-  <div class="container">
-    <div id="login-form">
-      <h2>Login</h2>
-      <input type="email" id="login-email" placeholder="Email" required>
-      <input type="password" id="login-password" placeholder="Password" required>
-      <button onclick="login()">Login</button>
-      <div class="toggle">
-        Don't have an account? <a onclick="toggleForms()">Register</a>
-      </div>
+
+<div class="container">
+
+
+  <!-- LOGIN FORM -->
+
+  <div id="login-form">
+
+    <h2>Login</h2>
+
+
+    <input 
+      type="email" 
+      id="login-email" 
+      placeholder="Email"
+      required
+    >
+
+
+    <input 
+      type="password" 
+      id="login-password" 
+      placeholder="Password"
+      required
+    >
+
+
+    <button onclick="login()">
+      Login
+    </button>
+
+
+    <div class="toggle">
+
+      Don't have an account?
+      <a onclick="toggleForms()">Register</a>
+
     </div>
 
-    <div id="register-form" class="hidden">
-      <h2>Register</h2>
-      <input type="text" id="reg-name" placeholder="Full Name" required>
-      <input type="email" id="reg-email" placeholder="Email" required>
-      <input type="text" id="reg-phone" placeholder="Phone Number" required>
-      <input type="password" id="reg-password" placeholder="Password" required>
-      <button onclick="register()">Register</button>
-      <div class="toggle">
-        Already have an account? <a onclick="toggleForms()">Login</a>
-      </div>
-    </div>
-    <div class="info">Page will auto-refresh every 2 minutes.</div>
+
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-  <script>
-    const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
-    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
 
-    const supabase = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_ANON_KEY
+
+  <!-- REGISTER FORM -->
+
+
+  <div id="register-form" class="hidden">
+
+
+    <h2>Register</h2>
+
+
+    <input 
+      type="text"
+      id="reg-name"
+      placeholder="Full Name"
+      required
+    >
+
+
+    <input 
+      type="email"
+      id="reg-email"
+      placeholder="Email"
+      required
+    >
+
+
+    <input 
+      type="tel"
+      id="reg-phone"
+      placeholder="Phone Number"
+      required
+    >
+
+
+    <input 
+      type="password"
+      id="reg-password"
+      placeholder="Password"
+      required
+    >
+
+
+    <button onclick="register()">
+
+      Register
+
+    </button>
+
+
+    <div class="toggle">
+
+      Already have an account?
+      <a onclick="toggleForms()">Login</a>
+
+    </div>
+
+
+  </div>
+
+
+  <div class="info">
+
+    Secure login powered by Supabase
+
+  </div>
+
+
+</div>
+
+
+
+
+
+<!-- Supabase Library -->
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+
+<script>
+
+
+// SUPABASE CONNECTION
+
+const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
+
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
+
+
+const supabase = window.supabase.createClient(
+
+    SUPABASE_URL,
+
+    SUPABASE_ANON_KEY
+
 );
-    // Auto-refresh the page every 2 minutes (120,000 ms)
-    setTimeout(() => {
-      location.reload();
-    }, 120000);
-
-    function toggleForms() {
-      document.getElementById("login-form").classList.toggle("hidden");
-      document.getElementById("register-form").classList.toggle("hidden");
-    }
-
-    function login() {
-      const email = document.getElementById("login-email").value;
-      const password = document.getElementById("login-password").value;
-
-      if (email && password) {
-        alert("Login successful! Page will now refresh.");
-        setTimeout(() => {
-          location.reload(); // Refresh after login
-        }, 2000);
-      } else {
-        alert("Please enter both email and password.");
-      }
-    }
-/*
-    function register() {
-      const name = document.getElementById("reg-name").value;
-      const email = document.getElementById("reg-email").value;
-      const phone = document.getElementById("reg-phone").value;
-      const password = document.getElementById("reg-password").value;
-
-      if (name && email && phone && password) {
-        alert("Registration successful! Page will now refresh.");
-        setTimeout(() => {
-          location.reload(); // Refresh after registration
-        }, 2000);
-      } else {
-        alert("Please fill out all fields.");
-      }
-    }
-*/
-    async function register() {
-
-  const name = document.getElementById("reg-name").value;
-  const email = document.getElementById("reg-email").value;
-  const phone = document.getElementById("reg-phone").value;
-  const password = document.getElementById("reg-password").value;
 
 
-  if (!name || !email || !phone || !password) {
-    alert("Please fill all fields.");
-    return;
-  }
 
 
-  const { data, error } = await supabase.auth.signUp({
-    email: email,
-    password: password,
+// SWITCH LOGIN / REGISTER
 
-    options: {
-      data: {
-        full_name: name,
-        phone: phone
-      }
-    }
-  });
+function toggleForms() {
 
 
-  if (error) {
-    alert(error.message);
-  } else {
-    alert("Registration successful! Please check your email for verification.");
-  }
+    document
+    .getElementById("login-form")
+    .classList.toggle("hidden");
+
+
+    document
+    .getElementById("register-form")
+    .classList.toggle("hidden");
+
 
 }
-  </script>
+
+
+
+
+// REGISTER USER
+
+async function register() {
+
+
+    const name =
+    document.getElementById("reg-name").value;
+
+
+    const email =
+    document.getElementById("reg-email").value;
+
+
+    const phone =
+    document.getElementById("reg-phone").value;
+
+
+    const password =
+    document.getElementById("reg-password").value;
+
+
+
+    if(!name || !email || !phone || !password){
+
+        alert("Please fill all fields.");
+
+        return;
+
+    }
+
+
+
+
+    const { data, error } = await supabase.auth.signUp({
+
+        email: email,
+
+        password: password,
+
+
+        options: {
+
+            data: {
+
+                full_name: name,
+
+                phone: phone
+
+            }
+
+        }
+
+    });
+
+
+
+
+    if(error){
+
+
+        alert(error.message);
+
+
+    }
+    else{
+
+
+        alert(
+        "Registration successful! Please check your email for verification."
+        );
+
+
+        console.log(data);
+
+
+    }
+
+
+
+}
+
+
+
+
+
+
+
+// LOGIN USER
+
+
+async function login(){
+
+
+    const email =
+    document.getElementById("login-email").value;
+
+
+    const password =
+    document.getElementById("login-password").value;
+
+
+
+    if(!email || !password){
+
+
+        alert("Please enter email and password.");
+
+        return;
+
+    }
+
+
+
+
+    const { data, error } =
+    await supabase.auth.signInWithPassword({
+
+        email: email,
+
+        password: password
+
+    });
+
+
+
+
+
+    if(error){
+
+
+        alert(error.message);
+
+
+    }
+    else{
+
+
+        alert("Login successful!");
+
+        console.log(data);
+
+
+        // Later you can redirect:
+        // window.location.href="dashboard.html";
+
+
+    }
+
+
+
+}
+
+
+
+</script>
+
+
 
 </body>
+
 </html>
