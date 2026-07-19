@@ -104,8 +104,15 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
+
   <script>
+    const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
+    const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
+
+    const supabase = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+);
     // Auto-refresh the page every 2 minutes (120,000 ms)
     setTimeout(() => {
       location.reload();
@@ -129,7 +136,7 @@
         alert("Please enter both email and password.");
       }
     }
-
+/*
     function register() {
       const name = document.getElementById("reg-name").value;
       const email = document.getElementById("reg-email").value;
@@ -145,6 +152,41 @@
         alert("Please fill out all fields.");
       }
     }
+*/
+    async function register() {
+
+  const name = document.getElementById("reg-name").value;
+  const email = document.getElementById("reg-email").value;
+  const phone = document.getElementById("reg-phone").value;
+  const password = document.getElementById("reg-password").value;
+
+
+  if (!name || !email || !phone || !password) {
+    alert("Please fill all fields.");
+    return;
+  }
+
+
+  const { data, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+
+    options: {
+      data: {
+        full_name: name,
+        phone: phone
+      }
+    }
+  });
+
+
+  if (error) {
+    alert(error.message);
+  } else {
+    alert("Registration successful! Please check your email for verification.");
+  }
+
+}
   </script>
 
 </body>
