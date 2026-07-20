@@ -236,26 +236,6 @@
 
 
 <script>
-
-
-// SUPABASE CONNECTION
-
-const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
-
-const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
-
-
-const supabase = window.supabase.createClient(
-
-    SUPABASE_URL,
-
-    SUPABASE_ANON_KEY
-
-);
-
-
-
-
 // SWITCH LOGIN / REGISTER
 
 function toggleForms() {
@@ -272,6 +252,23 @@ function toggleForms() {
 
 
 }
+
+// SUPABASE CONNECTION
+
+const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
+
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
+
+
+if (!window.supabase) {
+    alert("Supabase library failed to load.");
+} else {
+    const supabase = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+}
+
 
 
 
