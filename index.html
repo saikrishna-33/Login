@@ -198,11 +198,9 @@
     >
 
 
-    <button onclick="register()">
-
-      Register
-
-    </button>
+<button id="register-btn" onclick="register()">
+    Register
+</button>
 
 
     <div class="toggle">
@@ -255,7 +253,7 @@ function toggleForms() {
 
 // SUPABASE CONNECTION
 
-const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co/rest/v1/users";
+const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co";
 
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
 
@@ -263,7 +261,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 if (!window.supabase) {
     alert("Supabase library failed to load.");
 } else {
-    const supabase = window.supabase.createClient(
+     supabase = window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_ANON_KEY
     );
@@ -306,26 +304,28 @@ async function register() {
 
 
 
-    const { data, error } = await supabase.auth.signUp({
+    
+console.log("supabase =", supabase);
+console.log("supabase.auth =", supabase?.auth);
+const { data, error } = await supabase.auth.signUp({
+    email: email,
 
-        email: email,
-
-        password: password,
+    password: password,
 
 
-        options: {
+    options: {
 
-            data: {
+      data: {
 
-                full_name: name,
+          full_name: name,
 
-                phone: phone
+          phone: phone
 
-            }
+      }
 
-        }
+    }
 
-    });
+});
 
 
 
@@ -354,10 +354,53 @@ async function register() {
 
 }
 
+/*
+async function register() {
 
+    console.log("Register button clicked");
 
+    const name = document.getElementById("reg-name").value;
+    const email = document.getElementById("reg-email").value;
+    const phone = document.getElementById("reg-phone").value;
+    const password = document.getElementById("reg-password").value;
 
+    console.log({ name, email, phone, password });
 
+    try {
+
+console.log("supabase =", supabase);
+console.log("supabase.auth =", supabase?.auth);
+
+const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+    options: {
+        data: {
+            full_name: name,
+            phone: phone
+        }
+    }
+});
+
+        console.log("Data:", data);
+        console.log("Error:", error);
+
+        if (error) {
+            alert(error.message);
+            return;
+        }
+
+        alert("Registration successful!");
+
+    } catch (err) {
+
+        console.error("Unexpected Error:", err);
+        alert(err.message);
+
+    }
+}
+
+*/
 
 
 // LOGIN USER
