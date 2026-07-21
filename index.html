@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <title>Login/Register Portal</title>
-
   <style>
-
     body {
       font-family: Arial, sans-serif;
       background: #f2f2f2;
@@ -15,8 +12,6 @@
       align-items: center;
       height: 100vh;
     }
-
-
     .container {
       background-color: gray;
       padding: 30px;
@@ -24,28 +19,19 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.1);
       width: 350px;
     }
-
-
     h2 {
       text-align: center;
       margin-bottom: 20px;
     }
-
-
     input {
-
       width: 100%;
       padding: 10px;
       margin: 8px 0;
       box-sizing: border-box;
       border: 1px solid #ccc;
       border-radius: 4px;
-
     }
-
-
     button {
-
       width: 100%;
       padding: 10px;
       background-color: #4CAF50;
@@ -53,211 +39,172 @@
       border: none;
       border-radius: 4px;
       cursor: pointer;
-
     }
-
-
     button:hover {
-
       background-color: #45a049;
-
     }
-
-
     .toggle {
-
       text-align: center;
       margin-top: 10px;
-
     }
-
-
     .toggle a {
-
       color: #007BFF;
       cursor: pointer;
       text-decoration: none;
-
     }
-
-
     .toggle a:hover {
-
       text-decoration: underline;
-
     }
-
-
     .hidden {
-
       display: none;
-
     }
-
-
     .info {
-
       margin-top: 10px;
       font-size: 0.9em;
       color: #777;
       text-align: center;
-
+    }
+    .password-box {
+      position: relative;
+    }
+    .password-box input {
+      width: 100%;
+      padding-right: 45px;
+      box-sizing: border-box;
     }
 
-
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+      z-index:100;
+    }
   </style>
-
 </head>
-
-
 <body>
-
-
 <div class="container">
 
-
   <!-- LOGIN FORM -->
-
   <div id="login-form">
-
     <h2>Login</h2>
-
-
     <input 
       type="email" 
       id="login-email" 
       placeholder="Email"
       required
     >
+    <div class="password-box">
+      <input
+          type="password"
+          id="login-password"
+          placeholder="Password"
+          required
+      >
+      <span class="toggle-password"
+            onclick="togglePassword('login-password', this)">👁️</span>
+    </div>
 
-
-    <input 
-      type="password" 
-      id="login-password" 
-      placeholder="Password"
-      required
-    >
-
+    <div style="text-align:right; margin-top:5px; margin-bottom:10px;">
+    <!--  <a href="#" onclick="forgotPassword()" style="font-size:14px;">
+          Forgot Password?
+      </a>
+    -->
+      <a href="#" onclick="forgotPassword()" style="font-size:14px;">
+          Forgot Password?
+      </a>
+    </div>
 
     <button onclick="login()">
       Login
     </button>
-
-
     <div class="toggle">
-
       Don't have an account?
       <a onclick="toggleForms()">Register</a>
-
     </div>
-
-
   </div>
-
-
-
-
   <!-- REGISTER FORM -->
-
-
   <div id="register-form" class="hidden">
-
-
     <h2>Register</h2>
-
-
     <input 
       type="text"
       id="reg-name"
       placeholder="Full Name"
       required
     >
-
-
     <input 
       type="email"
       id="reg-email"
       placeholder="Email"
       required
     >
-
-
     <input 
       type="tel"
       id="reg-phone"
       placeholder="Phone Number"
       required
     >
-
-
-    <input 
-      type="password"
-      id="reg-password"
-      placeholder="Password"
-      required
-    >
-
-
+    <div class="password-box">
+      <input
+          type="password"
+          id="reg-password"
+          placeholder="Password"
+          required
+      >
+      <span class="toggle-password" 
+            onclick="togglePassword('reg-password', this)">👁️</span>
+    </div>
 <button id="register-btn" onclick="register()">
     Register
 </button>
-
-
     <div class="toggle">
-
       Already have an account?
       <a onclick="toggleForms()">Login</a>
-
     </div>
-
-
   </div>
-
-
   <div class="info">
+    <!-- RESET PASSWORD FORM -->
+    <div id="reset-form" class="hidden">
+      <h2>Reset Password</h2>
 
-    Secure login powered by Supabase
+      <input
+        type="email"
+        id="reset-email"
+        placeholder="Enter your Email"
+        required
+      >
 
-  </div>
+      <button onclick="forgotPassword()">
+        Send Reset Link
+      </button>
 
-
+      <div class="toggle">
+        <a onclick="showLogin()">Back to Login</a>
+      </div>
 </div>
-
-
-
-
-
+    Secure login powered by Supabase
+  </div>
+</div>
 <!-- Supabase Library -->
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
-
 <script>
+
 // SWITCH LOGIN / REGISTER
-
 function toggleForms() {
-
-
     document
     .getElementById("login-form")
     .classList.toggle("hidden");
-
-
     document
     .getElementById("register-form")
     .classList.toggle("hidden");
-
-
 }
 
 // SUPABASE CONNECTION
-
 const SUPABASE_URL = "https://ybzmspumaybllrzrxnkk.supabase.co";
-
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inliem1zcHVtYXlibGxyenJ4bmtrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODQwNDc2MzcsImV4cCI6MjA5OTYyMzYzN30.yc1dwmBf7pRyljBIbQYE8aQa9yAAMqQcXSsT4U0WITo";
-
-
 if (!window.supabase) {
     alert("Supabase library failed to load.");
 } else {
@@ -267,110 +214,55 @@ if (!window.supabase) {
     );
 }
 
-
-
-
-
 // REGISTER USER
-
 async function register() {
-
-
     const name =
     document.getElementById("reg-name").value;
-
-
     const email =
     document.getElementById("reg-email").value;
-
-
     const phone =
     document.getElementById("reg-phone").value;
-
-
     const password =
     document.getElementById("reg-password").value;
-
-
-
     if(!name || !email || !phone || !password){
-
         alert("Please fill all fields.");
-
         return;
-
     }
-
-
-
-
-    
 console.log("supabase =", supabase);
 console.log("supabase.auth =", supabase?.auth);
 const { data, error } = await supabase.auth.signUp({
     email: email,
-
     password: password,
-
-
     options: {
-
       data: {
-
           full_name: name,
-
           phone: phone
-
       }
-
     }
-
 });
-
-
-
-
     if(error){
-
-
         alert(error.message);
-
-
     }
     else{
-
-
         alert(
         "Registration successful! Please check your email for verification."
         );
-
-
         console.log(data);
-
-
     }
-
-
-
 }
 
 /*
 async function register() {
 
     console.log("Register button clicked");
-
     const name = document.getElementById("reg-name").value;
     const email = document.getElementById("reg-email").value;
     const phone = document.getElementById("reg-phone").value;
     const password = document.getElementById("reg-password").value;
-
     console.log({ name, email, phone, password });
-
     try {
-
 console.log("supabase =", supabase);
 console.log("supabase.auth =", supabase?.auth);
-
 const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -381,99 +273,72 @@ const { data, error } = await supabase.auth.signUp({
         }
     }
 });
-
         console.log("Data:", data);
         console.log("Error:", error);
-
         if (error) {
             alert(error.message);
             return;
         }
-
         alert("Registration successful!");
-
     } catch (err) {
-
         console.error("Unexpected Error:", err);
         alert(err.message);
-
     }
 }
-
 */
 
-
 // LOGIN USER
-
-
 async function login(){
-
-
     const email =
     document.getElementById("login-email").value;
-
-
     const password =
     document.getElementById("login-password").value;
-
-
-
     if(!email || !password){
-
-
         alert("Please enter email and password.");
-
         return;
-
     }
-
-
-
-
     const { data, error } =
     await supabase.auth.signInWithPassword({
-
         email: email,
-
         password: password
-
     });
-
-
-
-
-
     if(error){
-
-
         alert(error.message);
-
-
     }
     else{
-
-
         alert("Login successful!");
-
         console.log(data);
-
-
+        
         // Later you can redirect:
         // window.location.href="dashboard.html";
-
-
     }
-
-
-
 }
+function togglePassword(id, icon) {
+    const input = document.getElementById(id);
 
-
-
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = "👁️";
+    } else {
+        input.type = "password";
+        icon.textContent = "👁️";
+    }
+}
+async function forgotPassword() {
+    const email = document.getElementById("login-email").value;
+    if (!email) {
+        alert("Please enter your email address first.");
+        return;
+    }
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + "/reset-password.html"
+    });
+    if (error) {
+        alert(error.message);
+    } else {
+        alert("Password reset email has been sent. Please check your email.");
+    }
+}
 </script>
-
-
-
 </body>
-
 </html>
